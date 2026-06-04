@@ -1,15 +1,10 @@
-# Core
+streamlit
+plotly
 pandas
 numpy
 scikit-learn
-joblib
-
-# ML Models
 lightgbm
-shap
-
-# Dashboard
-streamlit
-
-# Visualization
-matplotlib
+joblib
+requests
+optuna
+imbalanced-learn
