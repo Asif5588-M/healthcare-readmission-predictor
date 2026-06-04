@@ -1,20 +1,15 @@
+# Core
 pandas
 numpy
 scikit-learn
 joblib
-xgboost
+
+# ML Models
 lightgbm
-catboost
-matplotlib
-seaborn
-plotly
-ydata-profiling
 shap
-optuna
+
+# Dashboard
 streamlit
-fastapi
-uvicorn
-python-multipart
-pyyaml
-tqdm
-imbalanced-learn
+
+# Visualization
+matplotlib
