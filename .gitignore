@@ -1,0 +1,34 @@
+# Data files
+data/raw/
+data/processed/
+*.csv
+*.xlsx
+*.zip
+
+# Models
+models/*.pkl
+models/*.joblib
+models/*.keras
+
+# Environment
+__pycache__/
+*.pyc
+*.pyo
+.env
+ds-env/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+logs/
