@@ -11,15 +11,13 @@ st.set_page_config(
     layout="wide"
 )
 
-# ── Paths ─────────────────────────────────────────────────────
 APP_DIR  = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(APP_DIR)
 
-# ── Load Model ────────────────────────────────────────────────
 @st.cache_resource
 def load_model():
     model  = joblib.load(
-        os.path.join(BASE_DIR, "models", 
+        os.path.join(BASE_DIR, "models",
                      "best_readmission_model.pkl"))
     scaler = joblib.load(
         os.path.join(BASE_DIR, "models", "scaler.pkl"))
@@ -43,7 +41,6 @@ with col_info:
     )
 st.divider()
 
-# ── Header ────────────────────────────────────────────────────
 st.title("🏥 Diabetic Patient Readmission Risk Predictor")
 st.markdown(
     "**ML-powered early readmission prediction**  \n"
@@ -77,16 +74,13 @@ race_val   = race_map[race_label]
 st.sidebar.markdown("---")
 st.sidebar.subheader("🏨 Admission Details")
 
-time_in_hospital = st.sidebar.slider(
-    "Days in Hospital", 1, 14, 4)
+time_in_hospital = st.sidebar.slider("Days in Hospital", 1, 14, 4)
 admission_type_id = st.sidebar.selectbox(
-    "Admission Type",
-    options=[1,2,3,4,5,6,7,8],
+    "Admission Type", options=[1,2,3,4,5,6,7,8],
     format_func=lambda x: {
         1:"Emergency",2:"Urgent",3:"Elective",
         4:"Newborn",5:"Not Available",6:"NULL",
-        7:"Trauma Center",8:"Not Mapped"
-    }[x])
+        7:"Trauma Center",8:"Not Mapped"}[x])
 discharge_disposition_id = st.sidebar.selectbox(
     "Discharge Disposition", list(range(1,27)), index=0)
 admission_source_id = st.sidebar.selectbox(
@@ -95,24 +89,15 @@ admission_source_id = st.sidebar.selectbox(
 st.sidebar.markdown("---")
 st.sidebar.subheader("🔬 Clinical Indicators")
 
-num_lab_procedures = st.sidebar.slider(
-    "Lab Procedures", 1, 132, 43)
-num_procedures     = st.sidebar.slider(
-    "Procedures", 0, 6, 1)
-num_medications    = st.sidebar.slider(
-    "Medications", 1, 81, 16)
-number_diagnoses   = st.sidebar.slider(
-    "Number of Diagnoses", 1, 16, 7)
-number_inpatient   = st.sidebar.slider(
-    "Prior Inpatient Visits", 0, 21, 0)
-number_emergency   = st.sidebar.slider(
-    "Prior Emergency Visits", 0, 76, 0)
-number_outpatient  = st.sidebar.slider(
-    "Prior Outpatient Visits", 0, 42, 0)
-num_drugs_active   = st.sidebar.slider(
-    "Active Diabetes Drugs", 0, 14, 4)
-num_drugs_changed  = st.sidebar.slider(
-    "Drugs with Dose Change", 0, 10, 1)
+num_lab_procedures = st.sidebar.slider("Lab Procedures", 1, 132, 43)
+num_procedures     = st.sidebar.slider("Procedures", 0, 6, 1)
+num_medications    = st.sidebar.slider("Medications", 1, 81, 16)
+number_diagnoses   = st.sidebar.slider("Number of Diagnoses", 1, 16, 7)
+number_inpatient   = st.sidebar.slider("Prior Inpatient Visits", 0, 21, 0)
+number_emergency   = st.sidebar.slider("Prior Emergency Visits", 0, 76, 0)
+number_outpatient  = st.sidebar.slider("Prior Outpatient Visits", 0, 42, 0)
+num_drugs_active   = st.sidebar.slider("Active Diabetes Drugs", 0, 14, 4)
+num_drugs_changed  = st.sidebar.slider("Drugs with Dose Change", 0, 10, 1)
 
 change = st.sidebar.selectbox(
     "Medication Change", [0,1],
@@ -120,6 +105,53 @@ change = st.sidebar.selectbox(
 diabetesMed = st.sidebar.selectbox(
     "On Diabetes Medication", [1,0],
     format_func=lambda x: "Yes" if x else "No")
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("💊 Diabetes Medications")
+
+metformin         = st.sidebar.selectbox("Metformin", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+insulin           = st.sidebar.selectbox("Insulin", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+glipizide         = st.sidebar.selectbox("Glipizide", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+glyburide         = st.sidebar.selectbox("Glyburide", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+glimepiride       = st.sidebar.selectbox("Glimepiride", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+pioglitazone      = st.sidebar.selectbox("Pioglitazone", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+rosiglitazone     = st.sidebar.selectbox("Rosiglitazone", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+repaglinide       = st.sidebar.selectbox("Repaglinide", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+nateglinide       = st.sidebar.selectbox("Nateglinide", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+chlorpropamide    = st.sidebar.selectbox("Chlorpropamide", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+acarbose          = st.sidebar.selectbox("Acarbose", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+miglitol          = st.sidebar.selectbox("Miglitol", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+glyburide_met     = st.sidebar.selectbox("Glyburide-Metformin", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+glipizide_met     = st.sidebar.selectbox("Glipizide-Metformin", [0,1],
+    format_func=lambda x: "Yes" if x else "No")
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("🩺 Diagnosis Categories")
+
+diag_map = {
+    "Circulatory":0,"Respiratory":1,"Digestive":2,
+    "Diabetes":3,"Injury":4,"Musculoskeletal":5,
+    "Genitourinary":6,"Neoplasms":7,"Other":8
+}
+diag_1 = st.sidebar.selectbox(
+    "Primary Diagnosis", list(diag_map.keys()), index=3)
+diag_2 = st.sidebar.selectbox(
+    "Secondary Diagnosis", list(diag_map.keys()), index=0)
+diag_3 = st.sidebar.selectbox(
+    "Tertiary Diagnosis", list(diag_map.keys()), index=8)
 
 # ── Top Metrics ───────────────────────────────────────────────
 c1, c2, c3, c4 = st.columns(4)
@@ -136,28 +168,52 @@ st.divider()
 if st.button("🔍 Predict Readmission Risk",
              type="primary", use_container_width=True):
 
-    features = np.array([[
-        race_val, gender_val, age_numeric,
-        admission_type_id, discharge_disposition_id,
-        admission_source_id, time_in_hospital,
-        num_lab_procedures, num_procedures,
-        num_medications, number_outpatient,
-        number_emergency, number_inpatient,
-        number_diagnoses, change, diabetesMed,
-        num_drugs_changed, num_drugs_active
-    ]])
+    features = pd.DataFrame([{
+        'race'                    : race_val,
+        'gender'                  : gender_val,
+        'admission_type_id'       : admission_type_id,
+        'discharge_disposition_id': discharge_disposition_id,
+        'admission_source_id'     : admission_source_id,
+        'time_in_hospital'        : time_in_hospital,
+        'num_lab_procedures'      : num_lab_procedures,
+        'num_procedures'          : num_procedures,
+        'num_medications'         : num_medications,
+        'number_outpatient'       : number_outpatient,
+        'number_emergency'        : number_emergency,
+        'number_inpatient'        : number_inpatient,
+        'number_diagnoses'        : number_diagnoses,
+        'metformin'               : metformin,
+        'repaglinide'             : repaglinide,
+        'nateglinide'             : nateglinide,
+        'chlorpropamide'          : chlorpropamide,
+        'glimepiride'             : glimepiride,
+        'glipizide'               : glipizide,
+        'glyburide'               : glyburide,
+        'pioglitazone'            : pioglitazone,
+        'rosiglitazone'           : rosiglitazone,
+        'acarbose'                : acarbose,
+        'miglitol'                : miglitol,
+        'insulin'                 : insulin,
+        'glyburide-metformin'     : glyburide_met,
+        'glipizide-metformin'     : glipizide_met,
+        'change'                  : change,
+        'diabetesMed'             : diabetesMed,
+        'age_numeric'             : age_numeric,
+        'diag_1_cat'              : diag_map[diag_1],
+        'diag_2_cat'              : diag_map[diag_2],
+        'diag_3_cat'              : diag_map[diag_3],
+        'num_drugs_changed'       : num_drugs_changed,
+        'num_drugs_active'        : num_drugs_active
+    }])
 
     try:
         features_scaled = scaler.transform(features)
     except Exception:
-        features_scaled = features
+        features_scaled = features.values
 
-    prob      = model.predict_proba(
-        features_scaled)[0][1]
+    prob      = model.predict_proba(features_scaled)[0][1]
     threshold = 0.15
-    pred      = 1 if prob >= threshold else 0
 
-    # Risk Level
     if prob >= 0.70:
         risk_level = "CRITICAL"
         icon = "🔴"
@@ -171,7 +227,6 @@ if st.button("🔍 Predict Readmission Risk",
         risk_level = "LOW"
         icon = "🟢"
 
-    # Recommendation
     rec_map = {
         "CRITICAL": "Immediate discharge planning + follow-up within 7 days",
         "HIGH"    : "Schedule follow-up within 14 days of discharge",
@@ -180,15 +235,13 @@ if st.button("🔍 Predict Readmission Risk",
     }
     rec = rec_map[risk_level]
 
-    # Banner
-    if risk_level in ["CRITICAL", "HIGH"]:
+    if risk_level in ["CRITICAL","HIGH"]:
         st.error(f"{icon} {risk_level} RISK — Early Readmission Likely")
     elif risk_level == "MODERATE":
         st.warning(f"{icon} MODERATE RISK — Monitor Closely")
     else:
         st.success(f"{icon} LOW RISK — Early Readmission Unlikely")
 
-    # Results
     r1, r2 = st.columns(2)
 
     with r1:
@@ -220,39 +273,26 @@ if st.button("🔍 Predict Readmission Risk",
     with r2:
         st.subheader("📋 Clinical Summary")
         st.write(f"**Risk Level:** {icon} {risk_level}")
-        st.write(
-            f"**Readmission Probability:** "
-            f"{prob * 100:.1f}%")
+        st.write(f"**Readmission Probability:** {prob*100:.1f}%")
         st.write(f"**Population Baseline:** 11.2%")
-        st.write(
-            f"**Decision Threshold:** "
-            f"{threshold * 100:.0f}%")
+        st.write(f"**Decision Threshold:** {threshold*100:.0f}%")
         st.info(f"📌 **Recommendation:**  \n{rec}")
 
-        # Risk Factor Table
         st.markdown("**Risk Factor Summary:**")
         risk_data = {
             "Factor": [
-                "Days Hospitalized",
-                "Prior Emergencies",
-                "Prior Inpatient",
-                "Medications",
-                "Drug Changes"
-            ],
+                "Days Hospitalized","Prior Emergencies",
+                "Prior Inpatient","Medications","Drug Changes"],
             "Value": [
-                time_in_hospital,
-                number_emergency,
-                number_inpatient,
-                num_medications,
-                num_drugs_changed
-            ],
+                time_in_hospital, number_emergency,
+                number_inpatient, num_medications,
+                num_drugs_changed],
             "Status": [
                 "⚠️ High" if time_in_hospital > 7 else "✅ Normal",
                 "⚠️ Risk" if number_emergency > 0 else "✅ None",
                 "⚠️ Risk" if number_inpatient > 0 else "✅ None",
                 "⚠️ High" if num_medications > 20 else "✅ Normal",
-                "⚠️ Active" if num_drugs_changed > 0 else "✅ None"
-            ]
+                "⚠️ Active" if num_drugs_changed > 0 else "✅ None"]
         }
         st.dataframe(
             pd.DataFrame(risk_data),
@@ -273,26 +313,21 @@ with st.expander("📖 Research Background"):
     st.markdown("""
     **Clinical Context**
     Early hospital readmission (<30 days) in diabetic
-    patients is a key quality indicator. CMS penalizes
-    hospitals for excess readmissions under HRRP.
+    patients is a key quality indicator.
 
     **Dataset**
-    Diabetes 130-US Hospitals (1999–2008) — 101,763
-    real patient encounters from 130 US hospitals.
+    Diabetes 130-US Hospitals (1999-2008) — 101,763
+    real patient encounters. Source: UCI ML Repository.
 
     **Methodology**
     - LightGBM with Optuna hyperparameter tuning
     - Clinical threshold 0.15 for high sensitivity
     - Class imbalance with scale_pos_weight
-    - SHAP explainability
 
     **Published Research**
-    *"ML for Sustainable Healthcare: Identifying
-    High-Cost Utilizers and Diagnostic Waste in Pakistan"*
-    — HEC Y-Category Journal
+    HEC Y-Category Journal
     """)
 
-# ── Footer ────────────────────────────────────────────────────
 st.divider()
 st.caption(
     "👨‍💻 Asif Nawaz | MPhil Economics | "
