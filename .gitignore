@@ -1,14 +1,18 @@
-# Data files
-data/raw/
-data/processed/
-*.csv
-*.xlsx
-*.zip
+# Data
+data/raw/*
+data/processed/*
+data/external/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
 
-# Models
+# Models & Outputs
 models/*.pkl
 models/*.joblib
-models/*.keras
+models/*.h5
+outputs/
+*.log
+logs/
 
 # Environment
 __pycache__/
@@ -16,19 +20,24 @@ __pycache__/
 *.pyo
 .env
 ds-env/
+hrp/
+venv/
+.venv/
 
 # Jupyter
 .ipynb_checkpoints/
-*.ipynb_checkpoints
+**/.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# VS Code
-.vscode/
-
-# Logs
-*.log
-logs/
+# Virtual env files
+environment.yml
